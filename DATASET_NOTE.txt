@@ -1,0 +1,9 @@
+Dataset connection
+==================
+
+The official WikiWeak-Article-Finder repository contains wikiweak_results.csv with 10,001 lines and about 1 MB. Its article-title field is `name`.
+
+This application now checks the packaged CSV. If it contains fewer than 1,000 records, it treats that file as the demo fallback and automatically downloads the current repository CSV from:
+https://github.com/Saksham-M4/WikiWeak-Article-Finder
+
+The app then validates and displays the detected article-title column. If the internet is unavailable, it keeps the local fallback so the UI can still open.
