@@ -1,3 +1,4 @@
+https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/
 # 🔎 WikiFact Check
 
 ### Evidence-First Wikipedia Fact Consistency Checker
