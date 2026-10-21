@@ -1,18 +1,33 @@
+
 # 🔎 WikiFact Check
+
 ### Evidence-Based Verification of Wikipedia Infobox Facts
 
-**WikiFact Check** is an experimental fact-verification tool that checks whether structured facts in Wikipedia infoboxes are supported by the corresponding article text. It compares infobox values with information found in the article and presents relevant evidence to help users identify potential inconsistencies.
+<p align="center">
+  <strong>Investigate → Compare → Identify Evidence → Review</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Saksham-M4/WikiFact-Check">
+    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github" alt="GitHub Repository">
+  </a>
+  <a href="https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/">
+    <img src="https://img.shields.io/badge/Live-Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
+  </a>
+  <img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Framework-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit">
+</p>
+
+**WikiFact Check** is an experimental fact-verification application that compares structured facts in Wikipedia infoboxes with information found in the corresponding article text.
+
+It identifies potential inconsistencies, presents relevant evidence, and helps users review structured information more transparently.
 
 Built for **Wikimedia Open Source Day — Challenge 4**.
 
 <p align="center">
-  <a href="https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/">
-    <strong>🚀 Live Demo</strong>
-  </a>
+  <a href="https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/"><strong>🚀 Try the Live Demo</strong></a>
   &nbsp; • &nbsp;
-  <a href="https://github.com/Saksham-M4/WikiFact-Check">
-    <strong>💻 Source Code</strong>
-  </a>
+  <a href="https://github.com/Saksham-M4/WikiFact-Check"><strong>💻 Explore the Source Code</strong></a>
 </p>
 
 ---
@@ -20,211 +35,438 @@ Built for **Wikimedia Open Source Day — Challenge 4**.
 ## 📌 Table of Contents
 
 - [Overview](#-overview)
-- [How It Works](#-how-it-works)
+- [Why WikiFact Check](#-why-wikifact-check)
 - [Key Features](#-key-features)
+- [System Workflow](#-system-workflow)
+- [System Architecture](#-system-architecture)
 - [Result Classification](#-result-classification)
 - [Supported Fact Types](#-supported-fact-types)
+- [Date Normalization](#-date-normalization)
 - [Technology Stack](#-technology-stack)
 - [Getting Started](#-getting-started)
 - [Running Tests](#-running-tests)
 - [Project Structure](#-project-structure)
 - [Dataset and Data Sources](#-dataset-and-data-sources)
-- [Limitations](#️-limitations)
+- [Limitations](#-limitations)
 - [Future Improvements](#-future-improvements)
 - [Contributing](#-contributing)
-- [Disclaimer](#️-disclaimer)
+- [Disclaimer](#-disclaimer)
 - [Author](#-author)
 
 ---
 
 ## 📖 Overview
 
-Wikipedia articles contain structured information in infoboxes, including dates, founders, locations, and countries. However, these facts may not always be explicitly supported by the text of the corresponding article.
+Wikipedia articles contain structured information in infoboxes, including birth dates, founders, locations, and countries.
 
-WikiFact Check helps address this problem by comparing a selected infobox fact with the article's own text and presenting a relevant evidence sentence for human review.
+However, a structured fact may not always be explicitly supported by the text of its corresponding article.
 
-Instead of automatically declaring information true or false, the system classifies the comparison into three outcomes:
+WikiFact Check helps investigate these situations by comparing selected infobox facts with relevant information in the article text.
 
-- **MATCH** — The fact and article text agree according to the implemented matching logic.
-- **POSSIBLE MISMATCH** — Potentially conflicting information was identified.
-- **NOT FOUND** — Corresponding evidence could not be identified.
+### 🎯 The Core Idea
 
-The goal is to make Wikipedia fact verification more transparent, interpretable, and easier to review.
+**Wikipedia Infobox → Article Text → Evidence Matching → Result → Human Review**
 
-## 🔄 How It Works
+The application classifies the comparison into three possible outcomes:
 
-WikiFact Check follows an evidence-based verification workflow.
+- 🟢 **MATCH** — The values agree according to the implemented matching logic.
+- 🟠 **POSSIBLE MISMATCH** — A potential inconsistency has been identified.
+- ⚪ **NOT FOUND** — Corresponding evidence could not be identified.
 
-1. **Enter an article title:** Type a Wikipedia article title or select one from the WikiWeak dataset.
-2. **Fetch the article:** Retrieve the current English Wikipedia article using the MediaWiki API.
-3. **Extract the infobox:** Identify available structured fields from the article.
-4. **Select a fact type:** Choose a supported category, such as Birth Date or Founder.
-5. **Normalize the fact:** Standardize supported values, including date formats and names.
-6. **Search the article text:** Look for information corresponding to the selected fact.
-7. **Identify evidence:** Select a relevant sentence from the article.
-8. **Compare the information:** Determine whether the extracted fact agrees with the identified evidence or whether a potential conflict exists.
-9. **Display the result:** Present the classification, evidence sentence, and article image when available.
+The goal is to make structured Wikipedia information easier to inspect, compare, and review.
 
-### System Flowchart
+---
 
-<!-- Add the WikiFact Check flowchart image here -->
+## 💡 Why WikiFact Check?
 
-The flowchart illustrates the complete workflow, including the three possible result paths and the final evidence display.
+- 🔍 **Transparency:** Shows relevant article evidence for human inspection.
+- ⚖️ **Consistency checking:** Identifies potential differences between structured facts and article text.
+- 📄 **Evidence-based review:** Helps users understand the information behind a result.
+- 🌐 **Live retrieval:** Retrieves article content through the MediaWiki API.
+- 🧠 **Human-in-the-loop verification:** Supports investigation rather than claiming to establish absolute truth.
+- 🧪 **Testability:** Includes automated tests for the implemented matching logic.
+
+---
 
 ## ✨ Key Features
 
-- **Live Wikipedia Retrieval** — Retrieves article content through the MediaWiki API.
-- **Infobox Fact Extraction** — Extracts supported structured facts from Wikipedia infoboxes.
-- **Fact Normalization** — Handles recognized variations in date formats and names.
-- **Evidence Sentence Identification** — Presents relevant article text for human verification.
-- **Potential Mismatch Detection** — Flags conflicting information for further investigation.
-- **Multiple Fact Categories** — Supports birth dates, founders, locations, and countries.
-- **WikiWeak Dataset Integration** — Provides article-title discovery through a CSV dataset.
-- **Article Image Display** — Shows the associated article image when available.
-- **Human-in-the-Loop Approach** — Supports manual review rather than claiming automatic truth verification.
-- **Automated Testing** — Includes deterministic tests and tests against live Wikipedia content.
+| Feature | Description |
+|---|---|
+| Live Wikipedia Retrieval | Retrieves article content through the MediaWiki API |
+| Infobox Fact Extraction | Extracts supported structured facts from Wikipedia articles |
+| Fact Normalization | Handles recognized variations in dates and names |
+| Evidence Identification | Finds relevant article sentences for review |
+| Potential Mismatch Detection | Flags possible inconsistencies |
+| Multiple Fact Categories | Supports birth dates, founders, locations, and countries |
+| WikiWeak Dataset Integration | Helps users discover article titles through a CSV dataset |
+| Article Image Display | Displays an associated article image when available |
+| Interactive Interface | Provides a user-friendly Streamlit workflow |
+| Automated Testing | Tests the implemented fact-checking logic |
+
+---
+
+## 🔄 System Workflow
+
+The following diagram illustrates the complete fact-checking workflow.
+
+```mermaid
+flowchart TD
+    A(["🔎 Start WikiFact Check"]) --> B["Enter Wikipedia Article Title"]
+    B --> C["Fetch Article via MediaWiki API"]
+
+    C --> D["Extract Infobox Facts"]
+    C --> E["Extract Article Text"]
+
+    D --> F["Select Supported Fact Type"]
+    F --> G["Normalize Infobox Value"]
+
+    E --> H["Search for Relevant Evidence"]
+
+    G --> I["Compare Fact and Evidence"]
+    H --> I
+
+    I --> J{"Evidence Comparison"}
+
+    J -->|Values Agree| K["🟢 MATCH"]
+    J -->|Potential Conflict| L["🟠 POSSIBLE MISMATCH"]
+    J -->|Evidence Not Identified| M["⚪ NOT FOUND"]
+
+    K --> N["Display Result and Evidence"]
+    L --> N
+    M --> N
+
+    N --> O(["👤 Human Review"])
+
+    classDef success fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef warning fill:#ffedd5,stroke:#ea580c,color:#9a3412
+    classDef neutral fill:#f1f5f9,stroke:#64748b,color:#334155
+
+    class K success
+    class L warning
+    class M neutral
+```
+
+### Workflow Explained
+
+1. **Input →** The user enters an article title.
+2. **Retrieval →** The application fetches the article from Wikipedia.
+3. **Extraction →** The system identifies available infobox facts and article text.
+4. **Selection →** The user selects a supported fact category.
+5. **Normalization →** Recognized value variations are standardized.
+6. **Evidence search →** The system looks for relevant information in the article.
+7. **Comparison →** The implemented matching rules compare the values.
+8. **Classification →** The application produces a result.
+9. **Review →** The user examines the evidence and decides whether further verification is needed.
+
+---
+
+## 🏗️ System Architecture
+
+This diagram shows how the main components interact.
+
+```mermaid
+flowchart LR
+    U["👤 User"] --> UI["Streamlit Interface"]
+
+    UI --> API["MediaWiki API"]
+    API --> W["Wikipedia Article"]
+
+    W --> I["Infobox Extraction"]
+    W --> T["Article Text Extraction"]
+
+    I --> N["Fact Normalization"]
+    T --> E["Evidence Identification"]
+
+    N --> M["Matching Engine"]
+    E --> M
+
+    M --> R["Result Classification"]
+    R --> D["Evidence and Result Display"]
+    D --> U
+
+    CSV[("WikiWeak CSV Dataset")] --> UI
+
+    classDef source fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef process fill:#f3e8ff,stroke:#9333ea,color:#581c87
+    classDef result fill:#dcfce7,stroke:#16a34a,color:#14532d
+
+    class API,W,CSV source
+    class I,T,N,E,M process
+    class R,D result
+```
+
+### Architecture Components
+
+| Component | Responsibility |
+|---|---|
+| Streamlit Interface | Accepts input and displays results |
+| MediaWiki API | Retrieves Wikipedia article information |
+| Infobox Extraction | Identifies supported structured facts |
+| Article Text Extraction | Obtains text for evidence searching |
+| Fact Normalization | Standardizes recognized dates and names |
+| Evidence Identification | Searches for relevant article sentences |
+| Matching Engine | Compares extracted values with identified evidence |
+| Result Classification | Produces MATCH, POSSIBLE MISMATCH, or NOT FOUND |
+| WikiWeak Dataset | Assists with article-title discovery |
+
+---
 
 ## 🚦 Result Classification
 
-| Result | Description |
+```mermaid
+flowchart TD
+    A["Selected Infobox Fact"] --> B["Search Article Text"]
+
+    B --> C{"Relevant Evidence Identified?"}
+
+    C -->|No| D["⚪ NOT FOUND"]
+    C -->|Yes| E{"Values Agree?"}
+
+    E -->|Yes| F["🟢 MATCH"]
+    E -->|Potential Conflict| G["🟠 POSSIBLE MISMATCH"]
+
+    D --> H["Review Evidence and Context"]
+    F --> H
+    G --> H
+
+    H --> I["Consult Reliable Sources When Needed"]
+```
+
+| Result | Meaning |
 |---|---|
-| 🟢 MATCH | The infobox fact and article text agree after the implemented normalization and matching process. |
-| 🟠 POSSIBLE MISMATCH | The article text contains potentially conflicting information that requires human review. |
-| ⚪ NOT FOUND | The system could not identify corresponding evidence in the article text. |
+| 🟢 MATCH | The infobox value and identified article evidence agree according to the implemented rules. |
+| 🟠 POSSIBLE MISMATCH | The comparison identifies a potential inconsistency that needs human review. |
+| ⚪ NOT FOUND | The current implementation could not identify corresponding evidence. |
 
-**Example:** If an infobox lists a birth year as 1980 but the article text mentions 1981, the system may flag a possible mismatch if its matching logic detects the conflicting values.
+### Example
 
-A result is an indication produced by the system, not a final judgment about factual accuracy.
+Suppose an infobox lists a birth year as `1980`, while the relevant article text mentions `1981`.
+
+If the matching rules identify the conflicting values, the system may report **POSSIBLE MISMATCH**.
+
+This does not prove which year is correct. The user must inspect the evidence and consult reliable sources when necessary.
+
+---
 
 ## 🧩 Supported Fact Types
 
 | Fact Type | Example | Verification Approach |
 |---|---|---|
-| Birth Date | Narendra Modi — 17 September 1950 | Normalizes supported date representations before comparison. |
-| Founder | Google — Larry Page and Sergey Brin | Searches for normalized names and corresponding textual evidence. |
-| Location | An organization or place | Compares the infobox value with location information in the article text. |
-| Country | An entity associated with a country | Compares the infobox value with country information found in the text. |
+| Birth Date | Narendra Modi — 17 September 1950 | Normalizes recognized date representations before comparison |
+| Founder | Google — Larry Page and Sergey Brin | Searches for normalized names and relevant textual evidence |
+| Location | An organization or place | Compares structured location values with relevant article text |
+| Country | An entity associated with a country | Searches for corresponding country information in the article |
 
-### Example: Date Normalization
+The results depend on the article structure, available evidence, and matching rules implemented for each fact type.
 
-The following formats represent the same date when recognized by the implementation:
+---
+
+## 📅 Date Normalization
+
+Equivalent dates can appear in different formats.
+
+For example:
 
 ```text
 1950-09-17
+      ↓
 17 September 1950
+      ↓
 September 17, 1950
+      ↓
 17/09/1950
 ```
 
-Normalization helps the system compare equivalent representations without treating formatting differences as factual disagreements.
+When these formats are recognized by the implementation, they can be normalized before comparison.
+
+```mermaid
+flowchart TD
+    A["Infobox Date"] --> C["Date Normalization"]
+    B["Article Text Date"] --> D["Date Normalization"]
+
+    C --> E["Standardized Infobox Date"]
+    D --> F["Standardized Article Date"]
+
+    E --> G{"Compare Standardized Values"}
+    F --> G
+
+    G -->|Equivalent| H["🟢 MATCH"]
+    G -->|Different| I["🟠 POSSIBLE MISMATCH"]
+```
+
+Normalization helps distinguish formatting differences from potential factual disagreements.
+
+---
 
 ## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| Python | Core application logic |
-| Streamlit | Interactive web application |
-| MediaWiki API | Retrieval of Wikipedia article content |
-| Pandas / CSV | Dataset handling, where used by the implementation |
+| Python | Core application logic and data processing |
+| Streamlit | Interactive web interface |
+| MediaWiki API | Wikipedia article retrieval |
+| Pandas / CSV | Dataset handling, where used |
 | Pytest | Automated testing |
-| WikiWeak dataset | Article-title discovery |
+| WikiWeak Dataset | Article-title discovery |
+
+---
 
 ## 🚀 Getting Started
 
-Follow these instructions to run WikiFact Check locally.
+Follow these steps to run WikiFact Check locally.
 
 ### Prerequisites
 
 - Python 3
 - Git
-- An internet connection to access the Wikimedia API
+- Internet access for retrieving Wikipedia content
 
-### 1. Clone the Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/Saksham-M4/WikiFact-Check.git
 ```
 
-### 2. Navigate to the Project Directory
+### Step 2: Navigate to the Project
 
 ```bash
 cd WikiFact-Check
 ```
 
-### 3. Install Dependencies
+### Step 3: Create a Virtual Environment (Recommended)
+
+**macOS / Linux**
 
 ```bash
-pip install -r requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-### 4. Launch the Application
+**Windows**
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### Step 4: Install Dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Step 5: Launch the Application
 
 ```bash
 streamlit run app.py
 ```
 
-### 5. Open the Application
+> **Important:** Run the application using `streamlit run app.py`, not `python app.py`.
 
-Visit the following address in your browser:
+### Step 6: Open the Application
+
+Streamlit normally provides the following local address:
 
 ```text
 http://localhost:8501
 ```
 
-**Important:** Run the application using `streamlit run app.py`, not `python app.py`.
+Open the URL in your browser.
 
-The application requires internet access to retrieve current article content from Wikipedia.
+### 🌐 Try the Live Demo
+
+You can also access the deployed application:
+
+**[🚀 Open WikiFact Check](https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/)**
+
+The live application requires network access and may be affected by deployment availability or changes to Wikipedia content.
+
+---
 
 ## 🧪 Running Tests
 
-WikiFact Check includes tests for the matching logic and a separate script for testing against live Wikipedia articles.
-
-### Run Deterministic Tests
+Run the existing deterministic test suite from the project directory:
 
 ```bash
 python -m pytest test_factcheck.py
 ```
 
-This runs predefined tests for the fact-checking logic.
+Pytest reports which tests pass and which fail.
 
-### Run Live Wikipedia Tests
+### Suggested Test Scenarios
 
-```bash
-python live_test.py
+| Scenario | Expected Behavior |
+|---|---|
+| Equivalent date formats | Recognized equivalent dates should match |
+| Conflicting date values | A recognized conflict may be flagged |
+| Matching founder information | Names and relationships should match when supported by the implemented rules |
+| Missing evidence | The result may be NOT FOUND |
+| Alternative name formats | Recognized variations should be handled appropriately |
+| Unusual article structures | Unsupported or missing fields should be handled safely |
+
+These are suggested scenarios, not a claim that every case is already covered by the existing tests.
+
+### Testing Workflow
+
+```mermaid
+flowchart TD
+    A["Clone Repository"] --> B["Install Dependencies"]
+    B --> C["Run Application"]
+    C --> D["Test Fact-Checking Workflow"]
+    D --> E["Run Pytest"]
+    E --> F{"Tests Pass?"}
+
+    F -->|Yes| G["Review Coverage and Edge Cases"]
+    F -->|No| H["Investigate and Fix Errors"]
+
+    H --> E
+    G --> I["Evaluate Accuracy with Labeled Data"]
 ```
 
-Live test results can change when Wikipedia articles are edited or when the Wikimedia API is unavailable.
+A passing test suite checks the cases covered by those tests; it does not independently establish overall verification accuracy.
 
-### Example Test Cases
-
-| Article | Fact Type | Expected Result |
-|---|---|---|
-| Narendra Modi | Birth Date | MATCH |
-| Mahendra Singh Dhoni | Birth Date | MATCH |
-| Google | Founder | MATCH |
-
-These are intended test cases, not guaranteed outcomes. Actual results depend on the current article content and the implemented extraction and matching rules.
+---
 
 ## 📁 Project Structure
+
+The following structure reflects the main files visible in the repository listing.
 
 ```text
 WikiFact-Check/
 │
-├── app.py                  # Streamlit interface and workflow
-├── fact_engine.py          # Extraction, normalization, matching and evidence
-├── wikiweak_results.csv    # WikiWeak article records
-├── test_factcheck.py       # Deterministic matching tests
-├── live_test.py            # Live Wikipedia tests
-├── requirements.txt        # Project dependencies
-├── DATASET_NOTE.txt        # Dataset documentation
-└── IMAGE_FEATURE.md        # Article image feature documentation
+├── app.py
+│   └── Main Streamlit application
+│
+├── test_factcheck.py
+│   └── Automated tests
+│
+├── requirements.txt
+│   └── Python dependencies
+│
+├── DATASET_NOTE.txt
+│   └── Dataset documentation
+│
+├── IMAGE_FEATURE.md
+│   └── Article image feature documentation
+│
+├── TEACHER_DEMO_CHECKLIST.md
+│   └── Demonstration preparation checklist
+│
+└── README.md
+    └── Project documentation
 ```
+
+If additional modules or dataset files are added, update this diagram to match the actual repository.
+
+---
 
 ## 📚 Dataset and Data Sources
 
 ### WikiWeak Dataset
 
-The WikiWeak CSV file helps users discover and select article titles. The application detects supported title columns, including:
+The WikiWeak dataset assists users in discovering and selecting article titles through a CSV file.
+
+Depending on the dataset structure, recognized title-column names may include:
 
 - `name`
 - `title`
@@ -232,64 +474,114 @@ The WikiWeak CSV file helps users discover and select article titles. The applic
 - `article_name`
 - `article name`
 
+The dataset supports article discovery; the application retrieves Wikipedia content for its fact-checking workflow.
+
+**Important:** The dataset should not be treated as independent evidence that a claim is true.
+
 ### Wikipedia MediaWiki API
 
-The actual fact-checking process uses the retrieved Wikipedia article rather than treating the dataset's contents as verification evidence.
+The MediaWiki API provides access to Wikipedia article content used by the application.
 
-This separates article discovery from the comparison of infobox facts with article text.
+Because Wikipedia content can change, results may differ between runs.
+
+---
 
 ## ⚠️ Limitations
 
-WikiFact Check is an experimental system based on heuristic matching. Its results have several important limitations.
+WikiFact Check is an experimental system based on implemented extraction, normalization, and matching rules.
 
-- **Relationship ambiguity:** Mentioning two people in the same sentence does not prove that they founded an organization together.
-- **Infobox variability:** Unusual templates and page structures may cause fact extraction to fail.
-- **Evidence selection:** A selected sentence may mention a topic without directly supporting the claim.
-- **Normalization constraints:** Unrecognized date formats, aliases, and name variations may not be handled correctly.
-- **Live content changes:** Wikipedia edits can change the results between runs.
-- **API dependency:** Retrieval depends on Wikimedia API availability and network access.
-- **Evaluation limitations:** No quantitative evaluation has yet established the system's precision, recall, or overall verification accuracy.
+- **Relationship ambiguity:** Mentioning two people in one sentence does not prove they founded an organization together.
+- **Infobox variability:** Unusual templates or page structures may prevent successful extraction.
+- **Evidence relevance:** A sentence may mention a related topic without directly supporting a claim.
+- **Normalization constraints:** Unrecognized dates, aliases, abbreviations, and name variations may not be handled correctly.
+- **Context limitations:** Text-based matching may overlook negation, qualifiers, historical changes, or differences in meaning.
+- **Live content changes:** Wikipedia edits can affect results between runs.
+- **API dependency:** Retrieval requires network access and Wikimedia API availability.
+- **Evaluation limitations:** Overall verification accuracy has not been established through a reported quantitative evaluation.
 
-These limitations mean that the system should assist human reviewers rather than replace them.
+These limitations mean that human review remains essential.
+
+---
 
 ## 🛣️ Future Improvements
 
-Potential improvements include:
+Potential future enhancements include:
 
-- **Relationship-Aware Verification:** Better detection of explicit relationships such as “founded by” and “co-founded by.”
-- **Quantitative Evaluation:** Evaluate performance on a labeled dataset using precision, recall, and F1-score.
-- **Expanded Fact Coverage:** Support more infobox fields and additional fact categories.
-- **Entity Resolution:** Improve handling of aliases, alternative names, and abbreviations.
-- **Confidence Scoring:** Provide confidence estimates and multiple ranked evidence sentences.
-- **Improved Evidence Extraction:** Distinguish direct supporting evidence from sentences that merely mention related entities.
+```mermaid
+flowchart TD
+    A["Current Rule-Based Verification"] --> B["Relationship-Aware Matching"]
+    A --> C["Improved Entity Resolution"]
+    A --> D["Better Evidence Ranking"]
+    A --> E["Expanded Fact Categories"]
+
+    B --> F["More Reliable Comparisons"]
+    C --> F
+    D --> F
+    E --> F
+
+    F --> G["Evaluation with Labeled Data"]
+    G --> H["Measure Precision, Recall and F1"]
+    H --> I["Iterative Improvement"]
+```
+
+Planned improvements:
+
+- **Relationship-Aware Verification:** Better identification of explicit relationships such as "founded by" and "co-founded by."
+- **Quantitative Evaluation:** Measure precision, recall, and F1-score using manually labeled examples.
+- **Expanded Fact Coverage:** Support additional infobox fields.
+- **Entity Resolution:** Improve handling of aliases and alternative names.
+- **Confidence Scoring:** Introduce calibrated confidence estimates if supported by evaluation.
+- **Improved Evidence Extraction:** Rank multiple evidence sentences and distinguish direct support from simple mentions.
+- **Context-Aware Matching:** Account for negation and temporal information.
 - **Multilingual Support:** Extend verification to additional language editions of Wikipedia.
-- **Regression Testing:** Expand deterministic tests to cover unusual article structures and conflicting values.
+- **Regression Testing:** Cover unusual article structures, conflicting values, and missing fields.
+
+---
 
 ## 🤝 Contributing
 
 Contributions, suggestions, and bug reports are welcome.
 
-If you would like to improve WikiFact Check:
+### Contribution Workflow
+
+```mermaid
+flowchart LR
+    A["Fork Repository"] --> B["Create Feature Branch"]
+    B --> C["Implement Changes"]
+    C --> D["Add or Update Tests"]
+    D --> E["Run Tests"]
+    E --> F["Submit Pull Request"]
+    F --> G["Code Review"]
+```
+
+To contribute:
 
 1. Fork the repository.
 2. Create a feature branch.
-3. Make your changes and add appropriate tests.
-4. Run the existing tests.
-5. Submit a pull request describing your changes.
+3. Implement your changes.
+4. Add or update relevant tests.
+5. Run the existing test suite.
+6. Submit a pull request describing your changes.
 
-For significant changes, consider opening an issue first to discuss the proposed improvement.
+For significant changes, consider opening an issue before implementation.
+
+---
 
 ## ⚖️ Disclaimer
 
 WikiFact Check is an educational and experimental project designed to assist with reviewing structured Wikipedia information.
 
-- **MATCH** means the implemented logic found agreement between the infobox and the article text. It does not independently establish that a claim is true.
-- **POSSIBLE MISMATCH** identifies a potential inconsistency that requires human review.
-- **NOT FOUND** means that the current implementation did not identify corresponding evidence. It does not prove that no supporting information exists.
+- **MATCH** means the implemented logic identified agreement between the infobox value and article text. It does not independently establish factual truth.
+- **POSSIBLE MISMATCH** indicates a potential inconsistency requiring human review.
+- **NOT FOUND** means the implementation did not identify corresponding evidence. It does not prove that supporting information does not exist.
 
-The tool does not independently determine factual truth. Its results depend on article content, fact extraction, normalization, and matching logic. Users should review the evidence and consult authoritative sources before drawing conclusions.
+Results depend on article content, extraction, normalization, and matching logic.
 
-Wikipedia content changes over time, so results may differ between runs.
+Users should inspect the displayed evidence and consult authoritative sources before drawing conclusions.
+
+**WikiFact Check supports fact investigation; it does not replace human judgment or authoritative verification.**
+
+---
 
 ## 👨‍💻 Author
 
@@ -299,14 +591,16 @@ Student at Garden City University, Bengaluru, India.
 
 Developed for **Wikimedia Open Source Day — Challenge 4**.
 
-- **GitHub:** https://github.com/Saksham-M4/WikiFact-Check
-- **Live Application:** https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/
+- **GitHub:** [Saksham-M4](https://github.com/Saksham-M4)
+- **Repository:** [WikiFact-Check](https://github.com/Saksham-M4/WikiFact-Check)
+- **Live Application:** [WikiFact Check](https://wikifact-check-mfi8axlwerctayxu2yjyct.streamlit.app/)
 
 ---
 
 <p align="center">
-  <strong>WikiFact Check</strong><br>
-  ![WikiFact Check system flowchart](assets/wikifact-check-flowchart.png)
-  Making structured knowledge easier to inspect, compare, and verify.
+  <strong>WikiFact Check</strong>
+  <br>
+  <em>Making structured knowledge easier to inspect, compare, and verify.</em>
+  <br><br>
+  Built with Python, Streamlit, and a commitment to transparent fact checking.
 </p>
-![WikiFact Check system flowchart](assets/wikifact-check-flowchart.png)
