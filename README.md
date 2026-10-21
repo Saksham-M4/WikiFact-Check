@@ -309,3 +309,4 @@ Developed for **Wikimedia Open Source Day — Challenge 4**.
   ![WikiFact Check system flowchart](assets/wikifact-check-flowchart.png)
   Making structured knowledge easier to inspect, compare, and verify.
 </p>
+![WikiFact Check system flowchart](assets/wikifact-check-flowchart.png)
